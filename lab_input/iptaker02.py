@@ -14,7 +14,7 @@ def main():
     print("You told me your favorite movie is:", user_input)
 
     theater_input = input("What is your movie theater of choice? ")
-    print("You told me your movie theater of choice is:", theater_input)
-
+    print(f"You told me your movie theater of choice is: {theater_input}")
+                    # f-string
 main()
 
