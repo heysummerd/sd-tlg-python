@@ -24,7 +24,7 @@ def main():
             int_number = int(str_number)
             stillChoosing = False
         else:
-            print(f"{int_number} is not a valid choice. Please select a number between 1 and {headcount}.")
+            print(f"{str_number} is not a valid choice. Please select a number between 1 and {headcount}.")
 
 
     student_choice = students[int_number - 1]
