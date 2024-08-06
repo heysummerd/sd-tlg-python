@@ -1,5 +1,7 @@
 #!/usr/env/python3
 
+import random
+
 def main():
     students = [
         "Amir", "Breana", "Katie", "Clayton", "Coty", "Daiyron",
@@ -9,10 +11,21 @@ def main():
     # len() function counts up how many names in the list
     headcount = len(students)
 
-    str_number = input(f"Pick a number between 1 and {headcount}: ")
+    stillChoosing = True
 
-    # int() function converts a string into an integer
-    int_number = int(str_number)
+    while(stillChoosing):
+
+        str_number = input(f"Select a number between 1 and {headcount}: ")
+
+        if (len(str_number) == 0):
+            int_number = random.randint(1, headcount)
+            stillChoosing = False
+        elif (int(str_number) > 0 and int(str_number) < 17):
+            int_number = int(str_number)
+            stillChoosing = False
+        else:
+            print(f"{int_number} is not a valid choice. Please select a number between 1 and {headcount}.")
+
 
     student_choice = students[int_number - 1]
 
