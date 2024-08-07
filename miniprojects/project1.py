@@ -3,6 +3,7 @@
 # DONUT BAKERY: What will happen in your dream tonight, based on the donut you construct?
 
 # imports
+import sys
 import os
 import time
 
@@ -10,9 +11,9 @@ import time
 
 def main():
 
-    again = True
+    makeDonut = True
 
-    while again:
+    while makeDonut:
         welcome()
         base = select_base()
         filling = select_filling()
@@ -21,7 +22,7 @@ def main():
         scores = [base, filling, icing, topping]
         score = sum(scores)
         analyze_dreams(score)
-        again = again()
+        makeDonut = again()
     
     clear()
     print("\n\nThank you for visiting Donut Fear Bakery! We hope you end up having a great night's sleep.")
@@ -34,7 +35,7 @@ def pause():
 # exit program
 def exit_program():
     print("\n\nLeaving the kitchen...\n\n")
-    sleep()
+    pause()
     sys.exit(0)
 
 # clear screen
@@ -43,6 +44,9 @@ def clear():
 
 # welcome
 def welcome():
+    
+    clear()
+
     print("\n\nWelcome to Donut Fear Bakery!\n\nPast these doors, you will be able to construct a unique donut.\n\nOnce baked, our special Donut Dream Machine will analyze the results...\nand predict what will happen in your dreams tonight!\n\n")
     
     proceed = input("Are you ready to proceed? [Y/N]\n>")
@@ -53,6 +57,7 @@ def welcome():
         proceed = input("\nAre you ready to proceed? [Y/N]\n>")
     
     if proceed.lower().strip() in ['n']:
+        clear()
         print("\n\nWe understand - donut dream predictions are not for everyone.\nCome back when you are ready!")
         exit_program()
 
@@ -72,13 +77,18 @@ def select_ingredient(ingredient, options):
         print(f"{option} = {options[option]}")
 
     # ask for a selection
-    selection = input(f"\n\nSelection: # ")
+    selection = input(f"\n\nSelection: # ").strip()
+    
+    # validate answer
+    while selection not in ["1", "2", "3", "4"]:
+        print("Please respond by entering a number between 1 and 4")
+        selection = input(f"\nWhich {ingredient} would you like from the menu?\n>").strip()
 
     # clear screen
     clear()
 
     # return the selection
-    return selection
+    return int(selection)
 
 
 
@@ -97,7 +107,7 @@ def select_base():
     base = select_ingredient("base", base_options)
 
     # collect and return the selected base ingredient
-    return int(base)
+    return base
     
 
 # select donut filling
@@ -115,7 +125,7 @@ def select_filling():
     filling = select_ingredient("filling", filling_options)
 
     # collect and return the selected base ingredient
-    return int(filling)
+    return filling
 
 
 # select donut icing
@@ -133,7 +143,7 @@ def select_icing():
     icing = select_ingredient("icing", icing_options)
 
     # collect and return the selected base ingredient
-    return int(icing)
+    return icing
 
 # select donut topping
 def select_topping():
@@ -150,7 +160,7 @@ def select_topping():
     topping = select_ingredient("topping", topping_options)
 
     # collect and return the selected base ingredient
-    return int(topping)
+    return topping
 
 # generate dream results
 def analyze_dreams(score):
