@@ -5,14 +5,15 @@
 # imports
 import os
 import time
+from emoji import emojize
 
 def showInstructions():
     """Show the game instructions when called"""
     #print a main menu and the commands
-    print('''
+    print(f'''
     RPG Game
     ========
-    * Get to the Garden with a key and a potion to win! Avoid the monsters! *
+    * Get to the Garden with a key {emojize(":key:")}   and a potion {emojize(":test_tube:")}   to win! Beware of the monsters! {emojize(":alien_monster:")}   *
     ========
     Commands:
       go [direction]
@@ -37,7 +38,17 @@ def moveOptions():
     print("\nMove Options:\n---------------------------")
     for room in rooms[currentRoom]:
         if room != 'item':
-            print(f'{room} = {rooms[currentRoom][room]}')
+            direction = ''
+            if room == "east":
+                direction = "right"
+            elif room == "west":
+                direction = "left"
+            elif room == "north":
+                direction = "up"
+            else:
+                direction = "down"
+            emoji = emojize(":" + direction + "_arrow:")
+            print(f'{emoji:<3} {room:<5} : {rooms[currentRoom][room]:<10}')
 
     print("\n")
 
@@ -134,7 +145,7 @@ while True:
             clear()
             # display monster's response
             print('''\nYou offer the silly hat to the monster. 
-It clutches the hat, places it carefully on it's head, and beams. 
+It clutches the hat, places it carefully on its head, and beams. 
                        
 You can tell it has found a new lease on life as it scampers out the kitchen window.''')
             # delete monster from the room
