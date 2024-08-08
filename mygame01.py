@@ -2,6 +2,10 @@
 """Driving a simple game framework with
    a dictionary object | Alta3 Research"""
 
+# imports
+import os
+import time
+
 def showInstructions():
     """Show the game instructions when called"""
     #print a main menu and the commands
@@ -26,7 +30,22 @@ def showStatus():
     if "item" in rooms[currentRoom]:
       print('You see a ' + rooms[currentRoom]['item'])
     print("---------------------------")
+    # show move options
+    moveOptions()
 
+def moveOptions():
+    print("\nMove Options:\n---------------------------")
+    for room in rooms[currentRoom]:
+        if room != 'item':
+            print(f'{room} = {rooms[currentRoom][room]}')
+
+    print("\n")
+
+def clear():
+    os.system("clear")
+
+def pause(seconds):
+    time.sleep(seconds)
 
 # an inventory, which is initially empty
 inventory = []
@@ -34,11 +53,15 @@ inventory = []
 # a dictionary linking a room to other rooms
 rooms = {
             'Hall' : {
+                  'west'  : 'Closet',
                   'south' : 'Kitchen',
                   'east'  : 'Dining Room',
                   'item'  : 'key'
                 },
-
+            'Closet' : {
+                  'east' : 'Hall',
+                  'item' : 'silly hat'
+                },
             'Kitchen' : {
                   'north' : 'Hall',
                   'item'  : 'monster'
@@ -82,6 +105,7 @@ while True:
         # if they aren't allowed to go that way:
         else:
             print('You can\'t go that way!')
+        pause(2)
 
     #if they type 'get' first
     if move[0] == 'get' :
@@ -99,11 +123,40 @@ while True:
         else:
             #tell them they can't get it
             print('Can\'t get ' + move[1] + '!')
+        pause(2)
+
+    #if they type 'give' first
+    if move[0] == 'give' :
+        # check if 'silly hat' is item player wants to give
+        # check if 'silly hat' is in inventory
+        # check if monster is in room
+        if  move[1] == 'silly hat' and 'silly hat' in inventory and'monster' in rooms[currentRoom]['item']:
+            clear()
+            # display monster's response
+            print('''\nYou offer the silly hat to the monster. 
+It clutches the hat, places it carefully on it's head, and beams. 
+                       
+You can tell it has found a new lease on life as it scampers out the kitchen window.''')
+            # delete monster from the room
+            del rooms[currentRoom]['item']
+            # delete silly hat from inventory
+            inventory.remove("silly hat")
+            pause(8)
+        else:
+            #tell them they can't give it
+            print(f"Can't give {move[1]}!")
+            pause(2)
+
+    clear()
 
     # If a player enters a room with a monster
     if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-        print('A monster has got you... GAME OVER!')
-        break
+        # check if 'silly hat' in inventory
+        if 'silly hat' in inventory:
+            print('A monster crouches in the corner, eyeing your silly hat hopefully')
+        else:
+            print('A monster has got you... GAME OVER!')
+            break
 
     # Define how a player can win
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
