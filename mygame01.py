@@ -2,6 +2,16 @@
 """Driving a simple game framework with
    a dictionary object | Alta3 Research"""
 
+# 3 Significant Changes:
+# --> 1. Create a menu for move options (including emoji arrows)
+#        * this taught me that Mac OS interprets "right arrows" inconsistently
+# --> 2. Import os & time to create handy functions that will allow me to clean
+#        up the user experience (clear screen, pause screen)
+# --> 3. Craft a way to survive the monster. In this version, players can get a silly hat from
+#        the new "Closet" location, and use the secret command "give silly hat" to the monster
+#        once they reach the kitchen.
+
+
 # imports
 import os
 import time
